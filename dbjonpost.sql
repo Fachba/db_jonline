@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 14 Nov 2019 pada 20.30
+-- Generation Time: 10 Des 2019 pada 17.00
 -- Versi Server: 10.1.13-MariaDB
 -- PHP Version: 7.0.5
 
@@ -31,22 +31,23 @@ CREATE TABLE `acara` (
   `idm` int(11) NOT NULL,
   `organisasi` varchar(50) NOT NULL,
   `tema` varchar(100) NOT NULL,
+  `tempat` varchar(50) NOT NULL,
   `tanggal` date NOT NULL,
-  `jam` varchar(50) NOT NULL,
+  `jam` time NOT NULL,
   `htm` int(11) NOT NULL,
   `gambar` varchar(50) NOT NULL,
   `des` varchar(500) NOT NULL,
   `cotelp` varchar(50) NOT NULL,
-  `post` int(11) NOT NULL
+  `post` int(11) NOT NULL,
+  `dibuat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `acara`
 --
 
-INSERT INTO `acara` (`ida`, `idm`, `organisasi`, `tema`, `tanggal`, `jam`, `htm`, `gambar`, `des`, `cotelp`, `post`) VALUES
-(2, 1, 'mu', 'lazis', '2019-10-30', '12.00', 20000, 'lazismu.jpg', 'lazis', '089', 1),
-(3, 1, 'singa', 'maung', '2019-10-30', '12.00', 0, 'Singo.jpg', 'singo', '089', 0);
+INSERT INTO `acara` (`ida`, `idm`, `organisasi`, `tema`, `tempat`, `tanggal`, `jam`, `htm`, `gambar`, `des`, `cotelp`, `post`, `dibuat`) VALUES
+(6, 1, 'Jonline', 'Tema atau Judul Kegiatan', 'Tempat Kegiatan diselenggarakan', '2019-12-30', '07:00:00', 15000, 'JoPostv1.png', 'Merupakan deskripsi kegiatan yang akan diselenggarakan seperti detail tentang kegiatan, penjabaran tema dll', '085645554899', 1, '2019-12-10 08:14:38');
 
 -- --------------------------------------------------------
 
@@ -62,16 +63,6 @@ CREATE TABLE `acara_member` (
   `regis` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `ket` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `acara_member`
---
-
-INSERT INTO `acara_member` (`idam`, `ida`, `idm`, `idp`, `regis`, `ket`) VALUES
-(6, 2, 0, 20817, '2019-11-11 07:04:04', ''),
-(7, 2, 0, 20255, '2019-11-11 07:05:06', ''),
-(8, 3, 0, 30835, '2019-11-11 07:05:49', ''),
-(9, 2, 1, 21424, '2019-11-14 18:31:11', '');
 
 -- --------------------------------------------------------
 
@@ -99,8 +90,7 @@ CREATE TABLE `member` (
 --
 
 INSERT INTO `member` (`idm`, `nama`, `jk`, `umur`, `status`, `alamat`, `email`, `telp`, `username`, `password`, `aktif`, `master`) VALUES
-(1, 'fachba isnaini', 'laki', 23, 'mahasiswa', 'lamongan', 'fachrulsecond@gmail.com', '085645554899', 'fachba', 'fachba', 1, 1),
-(3, 'tomora', 'laki', 23, 'bekerja', 'Deo', 'tomora@gmail.com', '089', 'tomora', 'tomora', 1, 0);
+(1, 'fachba isnaini', 'laki', 23, 'mahasiswa', 'lamongan', 'fachrulsecond@gmail.com', '085645554899', 'fachba', 'fachba', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -115,6 +105,7 @@ CREATE TABLE `peserta` (
   `jk_peserta` varchar(50) NOT NULL,
   `umur_peserta` int(11) NOT NULL,
   `status_peserta` varchar(50) NOT NULL,
+  `instansi_peserta` varchar(50) NOT NULL,
   `alamat_peserta` varchar(100) NOT NULL,
   `email_peserta` varchar(50) NOT NULL,
   `telp_peserta` varchar(50) NOT NULL,
@@ -123,16 +114,6 @@ CREATE TABLE `peserta` (
   `nota` varchar(50) NOT NULL,
   `hadir` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `peserta`
---
-
-INSERT INTO `peserta` (`idp`, `tanggal_peserta`, `nama_peserta`, `jk_peserta`, `umur_peserta`, `status_peserta`, `alamat_peserta`, `email_peserta`, `telp_peserta`, `ket_peserta`, `bill`, `nota`, `hadir`) VALUES
-(20255, '2019-11-12 13:29:02', 'fachrul bahar isnaini', 'laki', 18, 'pelajar', 'lamongan', 'jononlinecom@gmail.com', '089', '', 2, '', 1),
-(20817, '2019-11-11 07:25:42', 'fachba isnaini', 'laki', 21, 'mahasiswa', 'Suarabaya', 'fachrulsecond@gmail.com', '085777', '', 2, '', 0),
-(21424, '2019-11-14 18:31:11', 'fachba isnaini', 'laki', 23, 'mahasiswa', 'lamongan', 'fachrulsecond@gmail.com', '085645554899', '', 0, '', 0),
-(30835, '2019-11-11 07:05:49', 'Siti', 'perempuan', 21, 'mahasiswa', 'turi', 'siti@gmail.com', '09877', '', 2, '', 0);
 
 -- --------------------------------------------------------
 
@@ -147,14 +128,6 @@ CREATE TABLE `saran` (
   `baca` int(11) NOT NULL,
   `tanggapan` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `saran`
---
-
-INSERT INTO `saran` (`no`, `nama_saran`, `saran`, `baca`, `tanggapan`) VALUES
-(1, 'fachba', 'tingkatkan', 1, ''),
-(2, 'marwan', 'jadikan lebih baik', 0, '');
 
 --
 -- Indexes for dumped tables
@@ -198,17 +171,17 @@ ALTER TABLE `saran`
 -- AUTO_INCREMENT for table `acara`
 --
 ALTER TABLE `acara`
-  MODIFY `ida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `acara_member`
 --
 ALTER TABLE `acara_member`
-  MODIFY `idam` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idam` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `member`
 --
 ALTER TABLE `member`
-  MODIFY `idm` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idm` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `saran`
 --
